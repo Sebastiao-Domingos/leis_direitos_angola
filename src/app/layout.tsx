@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-pt">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -35,8 +35,7 @@ export default function RootLayout({
   );
 }
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-// import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppHeader } from "@/components/section/header";
 import { AppSidebar } from "@/components/section/side-bar";
 
@@ -44,7 +43,6 @@ function LayoutSCreen({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-
       <AppHeader />
       <main>{children}</main>
     </SidebarProvider>
