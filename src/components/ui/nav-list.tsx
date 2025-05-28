@@ -32,13 +32,13 @@ export function NavList({
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{title}</SidebarGroupLabel>
-      <SidebarMenu className="space-y-1">
+      <SidebarMenu className="space-y-2">
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <Link href={item.url}>
               <SidebarMenuButton
                 tooltip={item.title}
-                isActive={pathName === item.url || pathName.includes(item.url)}
+                isActive={pathName === item.url}
                 className="flex gap-2 items-center text-[18px] !p-4 !py-6"
                 size="sm"
               >

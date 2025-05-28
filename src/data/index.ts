@@ -8,13 +8,13 @@ export const Menudata = {
   },
   navMain: [
     {
-      title: "painel",
-      url: "/inicio",
+      title: "Início",
+      url: "/",
       icon: Home,
     },
     {
       title: "Nova Conversa",
-      url: "/conversa",
+      url: "/conversar",
       icon: MessageCircle,
     },
   ],

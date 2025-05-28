@@ -43,8 +43,11 @@ function LayoutSCreen({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <AppHeader />
-      <main>{children}</main>
+      <main className="w-full border">
+        <AppHeader />
+
+        {children}
+      </main>
     </SidebarProvider>
   );
 }

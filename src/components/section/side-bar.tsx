@@ -11,7 +11,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { ChevronRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { Menudata } from "@/data";
 import { NavList } from "../ui/nav-list";
@@ -35,7 +34,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               alt="logo da uniluanda"
             /> */}
             <div className="flex justify-center items-center">
-              <div className="text-xl font-bold">SANGO LUZINGO</div>
+              <div className="text-xl font-bold text-primary">
+                SANGO LUZINGO
+              </div>
             </div>
           </>
         </SidebarMenuButton>
