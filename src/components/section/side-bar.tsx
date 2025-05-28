@@ -51,7 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {!navMain.length && !navSetting.length && <SkeletonMenu />}
         {!navSetting.length && !navMain.length && <SkeletonMenu />}
       </SidebarContent>
-      <SidebarFooter>Sango Luzingo</SidebarFooter>
+      {/* <SidebarFooter>Sango Luzingo</SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
