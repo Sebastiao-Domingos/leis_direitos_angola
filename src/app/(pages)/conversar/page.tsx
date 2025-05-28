@@ -52,6 +52,7 @@
 import { useState, useRef, useEffect } from "react";
 import ChatInput from "@/components/chatinput"; // Ensure the path is correct
 import ChatLoader from "@/components/chatinput/loader";
+import { useActionChats } from "@/hooks/chats/useActionChat";
 
 // Define the shape of a chat message
 interface ChatMessage {
@@ -61,9 +62,9 @@ interface ChatMessage {
 }
 
 export default function ChatPage() {
+  const { mutationCreate } = useActionChats();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    // Initial messages
     {
       id: 1,
       sender: "agent",
@@ -107,6 +108,8 @@ export default function ChatPage() {
       setLoading(false);
       setMessages((prevMessages) => [...prevMessages, agentResponse]);
     }, 4000);
+
+    mutationCreate.mutate(newMessageText);
   };
 
   return (
@@ -138,14 +141,15 @@ export default function ChatPage() {
           </div>
         ))}
 
-        {loading && (
-          <div className="flex items-start gap-2">
-            <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center font-bold text-xl">
-              ⚖️
+        {loading ||
+          (mutationCreate.isLoading && (
+            <div className="flex items-start gap-2">
+              <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center font-bold text-xl">
+                ⚖️
+              </div>
+              <ChatLoader />
             </div>
-            <ChatLoader />
-          </div>
-        )}
+          ))}
 
         <div ref={messagesEndRef} />
       </main>
