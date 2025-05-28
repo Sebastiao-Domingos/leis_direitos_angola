@@ -6,7 +6,11 @@ import { AppHeader } from "@/components/section/header";
 import { AppSidebar } from "@/components/section/side-bar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-export function LayoutSCreen({ children }: { children: React.ReactNode }) {
+export default function LayoutSCreen({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const queryClient = new QueryClient();
   return (
     <>
