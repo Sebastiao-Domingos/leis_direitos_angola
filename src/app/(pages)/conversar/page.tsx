@@ -109,15 +109,32 @@ export default function ChatPage() {
       setMessages((prevMessages) => [...prevMessages, agentResponse]);
     }, 4000);
 
-    mutationCreate.mutate(newMessageText);
+    mutationCreate.mutate(
+      {
+        chatInput: newMessageText,
+        session_id: "da04f151-3438-46a5-8089-a7691f9271d3",
+      },
+      {
+        onSuccess: (data) => {
+          console.log("Resposta do agente:", data);
+          const agentResponse: ChatMessage = {
+            id: messages.length + 2,
+            sender: "agent",
+            text: data, // Assuming the response contains a 'response' field
+          };
+          setLoading(false);
+          setMessages((prevMessages) => [...prevMessages, agentResponse]);
+        },
+      }
+    );
   };
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       <main className="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
-        {messages.map((msg) => (
+        {messages.map((msg, index) => (
           <div
-            key={msg.id}
+            key={msg.id + index}
             className={`flex ${
               msg.sender === "user" ? "justify-end" : "items-start"
             } gap-2`}
