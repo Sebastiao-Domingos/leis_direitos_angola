@@ -124,7 +124,7 @@ export default function Home() {
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1.8 }}
         className="text-center space-y-6 relative z-10"
       >
         <h1 className="text-4xl sm:text-6xl font-extrabold text-white leading-tight">
@@ -144,7 +144,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ delay: 0.4, duration: 1.6 }}
           className="flex justify-center" // <-- Centraliza o botão
         >
           <Button

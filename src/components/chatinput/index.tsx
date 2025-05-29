@@ -307,7 +307,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
       <motion.div
         animate={{ height: isFocused || message ? 120 : 62 }}
         transition={{ type: "spring", duration: 0.3 }}
-        className="w-full max-w-md bg-white border border-border rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto"
+        className="w-full max-w-md bg-slate-100 border border-border rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto"
       >
         <motion.textarea
           ref={textareaRef}
@@ -327,7 +327,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
           rows={1}
           animate={{ height: isFocused || message ? 90 : 40 }}
           transition={{ duration: 0.3 }}
-          className="flex-1 resize-none border rounded-lg p-2 bg-transparent text-sm text-black outline-none overflow-hidden"
+          className="flex-1 resize-none border rounded-lg p-2 bg-transparent text-[16px] font-bold text-black outline-none overflow-hidden"
         />
 
         <motion.button

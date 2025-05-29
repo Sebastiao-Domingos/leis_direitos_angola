@@ -200,13 +200,6 @@ export default function ChatPage() {
   };
 
   return (
-    // <div
-    //   className="flex flex-col h-screen text-white font-[var(--font-geist-sans)]"
-    //   style={{
-    //     background:
-    //       "radial-gradient(circle at top left, #000 0%, #ff0000 50%, #ffcc00 100%)",
-    //   }}
-    // >
     <>
       <main className="flex-1 overflow-y-auto p-4 space-y-4 pb-28 relative z-10">
         {messages.map((msg, index) => (
@@ -223,7 +216,7 @@ export default function ChatPage() {
               className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${
                 msg.sender === "user"
                   ? "bg-yellow-400 text-black"
-                  : "bg-red-600"
+                  : "bg-red-600 text-black"
               }`}
             >
               {msg.sender === "user" ? "👤" : "⚖️"}
@@ -232,7 +225,7 @@ export default function ChatPage() {
               className={`px-4 py-3 rounded-2xl max-w-sm shadow-lg ${
                 msg.sender === "user"
                   ? "bg-yellow-500 text-black"
-                  : "bg-white text-red-800"
+                  : "bg-primary/40 text-white"
               }`}
             >
               {msg.text}
