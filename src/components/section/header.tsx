@@ -4,12 +4,12 @@ import { SidebarTrigger } from "../ui/sidebar";
 export function AppHeader() {
   return (
     <header
-      className="px-6 py-4 shadow-md flex items-center gap-4 sticky top-0 z-40 text-white"
-      style={{
-        background:
-          "radial-gradient(circle at top left, #000 0%, #ff0000 100%)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-      }}
+      className="px-6 py-4 shadow-md flex items-center gap-4 sticky top-0 z-40 text-white bg-gradient-to-br from-black/90 /via-primary/90 to-primary/80"
+      // style={{
+      //   background:
+      //     "radial-gradient(circle at top left, #000 0%, #ff0000 100%)",
+      //   borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+      // }}
     >
       <SidebarTrigger className="-ml-1" />
 
