@@ -1,17 +1,5 @@
-// import Formulario from "@/components/formulario";
-
-// export default function Conversar() {
-//   return (
-//     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-//       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-//         <Formulario />
-//       </main>
-//     </div>
-//   );
-// }
-
 // app/chat/page.tsx
-export default function ChatPage() {
+export default function Perfil() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       <main className="flex-1 overflow-y-auto p-4 space-y-4">
