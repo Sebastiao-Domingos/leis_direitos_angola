@@ -224,11 +224,18 @@ export default function ChatPage() {
             <div
               className={`px-4 py-3 rounded-2xl max-w-sm shadow-lg ${
                 msg.sender === "user"
-                  ? "bg-yellow-500 text-black"
-                  : "bg-primary/40 text-white"
+                  ? "bg-yellow-500 text-black min-w-[200px] max-w-[600px]"
+                  : "bg-primary/40 text-white min-w-[200px] max-w-[600px]"
               }`}
             >
-              {msg.text}
+              {msg.sender === "agent" ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: msg.text }}
+                  className="prose prose-sm max-w-none text-white"
+                />
+              ) : (
+                msg.text
+              )}
             </div>
           </motion.div>
         ))}
