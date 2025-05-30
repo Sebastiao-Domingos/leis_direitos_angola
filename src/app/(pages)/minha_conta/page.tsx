@@ -1,51 +1,99 @@
-// app/chat/page.tsx
+import { Button } from "@/components/ui/button";
+
 export default function Perfil() {
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
-      <main className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Mensagem do agente */}
-        <div className="flex items-start gap-2">
-          <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center font-bold text-xl">
-            ⚖️
-          </div>
-          <div className="bg-secondary/60 text-secondary-foreground px-4 py-3 rounded-2xl max-w-sm shadow">
-            Olá! Como posso ajudá-lo hoje?
-          </div>
-        </div>
+    <main className="flex-1 /overflow-y-auto p-4 space-y-4 pb-28 relative z-10">
+      <div className="/prose max-w-5xl mx-auto">
+        <h1 className="text-center text-4xl font-bold mb-6 text-secondary">
+          Painel do Usuário
+        </h1>
 
-        {/* Mensagem do usuário */}
-        <div className="flex justify-end gap-2">
-          <div className="w-10 h-10 bg-primary/40 rounded-full flex items-center justify-center font-bold text-xl">
-            👤
-          </div>
-          <div className="bg-primary/60 text-primary-foreground px-4 py-3 rounded-2xl max-w-sm shadow">
-            Quero saber mais sobre os meus direitos civis.
-          </div>
-        </div>
+        <section className="bg-white/20 p-6 rounded-xl shadow-md mb-10 text-white">
+          <h2 className="text-2xl font-semibold mb-4">Boas-vindas</h2>
+          <p>
+            Bem-vindo ao seu painel inteligente! Aqui você pode interagir com o
+            agente de inteligência artificial, visualizar suas respostas
+            organizadas, salvar informações importantes e acompanhar o seu
+            histórico de interações.
+          </p>
+        </section>
 
-        {/* Mensagem do agente */}
-        <div className="flex items-start gap-2">
-          <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center font-bold text-xl">
-            ⚖️
+        <section className="grid grid-cols-1 text-white md:grid-cols-2 gap-6">
+          <div className="bg-white/20 p-6 rounded-xl shadow-md">
+            <h3 className="text-xl font-bold mb-3">Últimas Interações</h3>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <p>
+                  <strong>Consulta:</strong> Como funciona a autenticação JWT?
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Resposta:</strong> Recebida há 5 minutos
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Consulta:</strong> Como criar rotas protegidas no
+                  Next.js?
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Resposta:</strong> Recebida há 10 minutos
+                </p>
+              </li>
+            </ul>
           </div>
-          <div className="bg-secondary/60 text-secondary-foreground px-4 py-3 rounded-2xl max-w-sm shadow">
-            Claro! Podemos conversar sobre saúde, educação, identidade e muito
-            mais. Qual tema deseja aprofundar?
-          </div>
-        </div>
-      </main>
 
-      {/* Input de mensagem */}
-      <footer className="fix bottom-0 px-4 py-4 bg-muted border-t border-border flex items-center gap-2">
-        <input
-          type="text"
-          placeholder="Digite a sua mensagem..."
-          className="flex-1 px-4 py-2 rounded-full bg-white border border-input text-sm outline-none focus:ring-1 focus:ring-primary"
-        />
-        <button className="bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
-          Enviar
-        </button>
-      </footer>
-    </div>
+          <div className="bg-white/20 p-6 rounded-xl shadow-md">
+            <h3 className="text-xl font-bold mb-3">Pergunta Rápida</h3>
+            <p className="mb-4">Digite sua dúvida para o agente:</p>
+            <form className="flex flex-col space-y-4">
+              <textarea
+                className="w-full p-3 bg-transparent border rounded-md focus:outline-none focus:ring focus:ring-secondary/40 text-white"
+                rows={4}
+                placeholder="Digite sua pergunta aqui..."
+              ></textarea>
+              <Button type="submit">Enviar Pergunta</Button>
+            </form>
+          </div>
+        </section>
+
+        <section className="bg-white/20 text-white p-6 rounded-xl shadow-md mt-10">
+          <h3 className="text-xl font-bold mb-3">Histórico de Consultas</h3>
+          <table className="table-auto w-full border border-collapse border-gray-300/30 rounded">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2 text-left">Data</th>
+                <th className="border px-4 py-2 text-left">Pergunta</th>
+                <th className="border px-4 py-2 text-left">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">25/05/2025</td>
+                <td className="border px-4 py-2">Explica o que é TypeORM</td>
+                <td className="border px-4 py-2">Respondido</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">24/05/2025</td>
+                <td className="border px-4 py-2">
+                  Como implementar autenticação JWT?
+                </td>
+                <td className="border px-4 py-2">Respondido</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">23/05/2025</td>
+                <td className="border px-4 py-2">
+                  Problema com multer no upload
+                </td>
+                <td className="border px-4 py-2">Respondido</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
   );
 }
