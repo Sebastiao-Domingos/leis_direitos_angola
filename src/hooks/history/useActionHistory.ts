@@ -3,17 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const controller = new HistoryService();
 
-function useActionHistory() {
+export function useActionHistory() {
   const queryFronecidor = useQueryClient();
 
-  const mutationSaveChat = useMutation({
-    mutationFn: controller.saveChat,
-    onSuccess() {
-      queryFronecidor.invalidateQueries({
-        queryKey: ["history"],
-      });
-    },
-  });
+  // const mutationSaveChat = useMutation({
+  //   mutationFn: controller.saveChat,
+  //   onSuccess() {
+  //     queryFronecidor.invalidateQueries({
+  //       queryKey: ["history"],
+  //     });
+  //   },
+  // });
 
   const mutationDeleteChat = useMutation({
     mutationFn: controller.deleteChat,
@@ -44,7 +44,7 @@ function useActionHistory() {
 
   return {
     mutationClearHistory,
-    mutationSaveChat,
+    // mutationSaveChat,
     mutationDeleteChat,
     mutationDeleteAllChats,
   };

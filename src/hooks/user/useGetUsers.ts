@@ -24,7 +24,7 @@ export function useGetUsers(id?: number) {
 export function useGetLoggedUser() {
   const { data, ...result } = useQuery({
     queryFn: user.getUserLogged,
-    queryKey: ["users"],
+    queryKey: ["user-auth"],
   });
 
   return { data, result };

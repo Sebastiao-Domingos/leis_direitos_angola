@@ -46,7 +46,7 @@ export default function RegisterPage() {
 
   return (
     <div className="relative z-20 min-h-screen flex items-center justify-center bg-transparent">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl bg-white/5 text-white">
         <CardHeader>
           <CardTitle className="text-center text-2xl">Criar Conta</CardTitle>
         </CardHeader>

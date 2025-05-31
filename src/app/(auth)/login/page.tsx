@@ -33,14 +33,15 @@ export default function LoginPage() {
       setLoading(false);
 
       if (mutationLogin.isSuccess) {
-        router.push("/sango-luzingo/inicial");
+        console.log("ola");
+        router.push("/sango-luzingo");
       }
     }, 4000);
   };
 
   return (
     <div className="relative z-20 min-h-screen flex items-center justify-center bg-transparent">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl bg-white/5 text-white">
         <CardHeader>
           <CardTitle className="text-center text-2xl">Iniciar Sessão</CardTitle>
         </CardHeader>

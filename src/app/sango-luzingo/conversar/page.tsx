@@ -5,6 +5,10 @@ import ChatInput from "@/components/chatinput";
 import ChatLoader from "@/components/chatinput/loader";
 import { useActionChats } from "@/hooks/chats/useActionChat";
 import { motion } from "framer-motion";
+import { useActionHistory } from "@/hooks/history/useActionHistory";
+import { HistoryService } from "@/services/history.service";
+import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
+import { useRouter } from "next/navigation";
 
 interface ChatMessage {
   id: number;
@@ -12,8 +16,11 @@ interface ChatMessage {
   text: string;
 }
 
+const service_history = new HistoryService();
+
 export default function ChatPage() {
   const { mutationCreate } = useActionChats();
+  // const { mutationSaveChat } = useActionHistory();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -29,12 +36,36 @@ export default function ChatPage() {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const { data: user, result } = useGetLoggedUser();
 
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
+  if (result.isFetching) {
+    return (
+      <div className="relative flex items-center justify-center h-screen">
+        <p className="text-white">Carregando...</p>
+      </div>
+    );
+  }
+
+  if (result.isError) {
+    return (
+      <div className="relative flex items-center justify-center h-screen">
+        <p className="text-red-500">Erro ao carregar usuário.</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    router.push("/login");
+
+    return;
+  }
+
+  // useEffect(() => {
+  //   if (messagesEndRef.current) {
+  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [messages]);
 
   const handleSendMessage = async (newMessageText: string) => {
     const newUserMessage: ChatMessage = {
@@ -59,6 +90,13 @@ export default function ChatPage() {
           };
           setMessages((prev) => [...prev, agentResponse]);
           setLoading(false);
+
+          service_history.saveChat({
+            userId: user.id!, // Substitua pelo ID do usuário real
+            chat: messages,
+            conversationId: 1, // Substitua pelo ID da conversa real
+            title: messages.length > 2 ? messages[2].text : "Nova conversa",
+          });
         },
         onError: () => {
           const errorResponse: ChatMessage = {

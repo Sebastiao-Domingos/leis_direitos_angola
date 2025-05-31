@@ -10,7 +10,7 @@ function useActionUser() {
     mutationFn: controller.login,
     onSuccess() {
       queryFronecidor.invalidateQueries({
-        queryKey: ["users"],
+        queryKey: ["user-login"],
       });
     },
   });
@@ -19,12 +19,21 @@ function useActionUser() {
     mutationFn: controller.register,
     onSuccess() {
       queryFronecidor.invalidateQueries({
-        queryKey: ["users"],
+        queryKey: ["user-register"],
       });
     },
   });
 
-  return { mutationLogin, mutationRegister };
+  const mutationLogOut = useMutation({
+    mutationFn: controller.logout,
+    onSuccess() {
+      queryFronecidor.invalidateQueries({
+        queryKey: ["user-logout"],
+      });
+    },
+  });
+
+  return { mutationLogin, mutationRegister, mutationLogOut };
 }
 
 export { useActionUser };
