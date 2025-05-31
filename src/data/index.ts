@@ -22,13 +22,13 @@ export const Menudata = {
   navSetting: [
     {
       title: "Configurações",
-      url: "configuracoes",
+      url: "/configuracoes",
       icon: FileArchive,
     },
 
     {
       title: "Minha Conta",
-      url: "minha_conta",
+      url: "/minha_conta",
       icon: UserCircle,
     },
   ],
