@@ -31,7 +31,7 @@ export function NavList({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-white">{title}</SidebarGroupLabel>
       <SidebarMenu className="space-y-2">
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>

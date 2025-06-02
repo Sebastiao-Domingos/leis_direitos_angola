@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 
 const avatarUsuario = "/user-avatar.png"; // substitua com a imagem real do usuário
@@ -42,7 +43,6 @@ export default function ChatPage() {
         </p>
       </header>
 
-      {/* Conteúdo do chat */}
       <main className="flex-1 overflow-y-auto p-4 space-y-4">
         {mensagens.map((msg, idx) => (
           <motion.div
@@ -55,7 +55,9 @@ export default function ChatPage() {
             }`}
           >
             {msg.remetente === "agente" && (
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={avatarAgente}
                 alt="Agente"
                 className="w-10 h-10 rounded-full bg-white border p-1"
@@ -71,7 +73,9 @@ export default function ChatPage() {
               {msg.texto}
             </div>
             {msg.remetente === "usuario" && (
-              <img
+              <Image
+                width={100}
+                height={100}
                 src={avatarUsuario}
                 alt="Usuário"
                 className="w-10 h-10 rounded-full bg-white border p-1 ml-2"

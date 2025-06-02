@@ -3,7 +3,7 @@
 // components/VerticalMenu.jsx
 import React from "react";
 import Link from "next/link"; // For Next.js client-side navigation
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const VerticalMenu = () => {
   const router = usePathname();

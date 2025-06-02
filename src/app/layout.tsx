@@ -27,27 +27,10 @@ export default function RootLayout({
   return (
     <html lang="pt-pt">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black/70`}
       >
-        <LayoutSCreen>{children}</LayoutSCreen>
+        {children}
       </body>
     </html>
-  );
-}
-
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppHeader } from "@/components/section/header";
-import { AppSidebar } from "@/components/section/side-bar";
-
-function LayoutSCreen({ children }: { children: React.ReactNode }) {
-  return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main className="w-full border">
-        <AppHeader />
-
-        {children}
-      </main>
-    </SidebarProvider>
   );
 }
