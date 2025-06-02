@@ -60,18 +60,6 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
     return;
   }
 
-  //   if (!user) {
-  //     router.push("/login");
-
-  //     return;
-  //   }
-
-  // useEffect(() => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [messages]);
-
   const handleSendMessage = async (newMessageText: string) => {
     const newUserMessage: ChatMessage = {
       id: messages.length + 1,

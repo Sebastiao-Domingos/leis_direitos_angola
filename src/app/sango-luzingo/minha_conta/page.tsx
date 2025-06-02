@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { useActionHistory } from "@/hooks/history/useActionHistory";
 import { useGetHistory } from "@/hooks/history/useGetHistory";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
-import { ConversationType, HistoryType } from "@/services/history.service";
-import { Delete, Eye, Trash } from "lucide-react";
+import { ConversationType } from "@/services/history.service";
+import { Eye, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Perfil() {
   const router = useRouter();
-  const { data, result } = useGetLoggedUser();
+  const { data } = useGetLoggedUser();
 
   const { data: histories, result: result_history } = useGetHistory();
 
@@ -155,8 +155,8 @@ export default function Perfil() {
             <tbody>
               {histories &&
                 histories.conversations &&
-                histories.conversations.map((item) => (
-                  <TRow item={item} key={item.id} />
+                histories.conversations.map((item, index) => (
+                  <TRow item={item} key={index} />
                 ))}
             </tbody>
           </table>
@@ -166,7 +166,7 @@ export default function Perfil() {
   );
 }
 
-export function TRow({ item }: { item: ConversationType }) {
+function TRow({ item }: { item: ConversationType }) {
   const router = useRouter();
   const { mutationClearHistory } = useActionHistory();
 

@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ChatInput from "@/components/chatinput";
 import ChatLoader from "@/components/chatinput/loader";
 import { useActionChats } from "@/hooks/chats/useActionChat";
 import { motion } from "framer-motion";
-import { useActionHistory } from "@/hooks/history/useActionHistory";
-import { HistoryService } from "@/services/history.service";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
 import { useRouter } from "next/navigation";
 import { useGetLastIndexConversation } from "@/hooks/history/useGetHistory";

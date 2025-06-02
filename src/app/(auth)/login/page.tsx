@@ -27,7 +27,7 @@ export default function LoginPage() {
           setLoading(false);
           toast.error("Erro ao realizar login!");
         },
-        onSuccess(data) {
+        onSuccess() {
           toast.success("Login realizado com sucesso!");
 
           setTimeout(() => {

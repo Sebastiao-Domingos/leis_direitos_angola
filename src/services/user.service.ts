@@ -68,9 +68,7 @@ export class UserService {
       localStorage.getItem("user_logged") ?? ""
     );
 
-    if (user) {
-      return user;
-    } else return undefined;
+    return user;
   }
 
   async logout(): Promise<void> {
