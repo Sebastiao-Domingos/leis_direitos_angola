@@ -111,11 +111,11 @@ export default function HomePage() {
               Iniciar Sessão <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
-          <Link href="/register">
+          <Link href="/cadastrar">
             <Button
               variant="outline"
               size="lg"
-              className="w-full md:w-48 h-14 hover:bg-transparent hover:text-white"
+              className="w-full md:w-48 h-14 hover:bg-transparent hover:text-white bg-secondary/20 text-white"
             >
               Criar Conta
             </Button>

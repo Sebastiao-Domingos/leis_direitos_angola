@@ -1,4 +1,3 @@
-// app/(auth)/login/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -8,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useActionUser } from "@/hooks/user/useUserAction";
-import { on } from "events";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,7 +18,6 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Lógica de login aqui
     mutationLogin.mutateAsync(
       { username: email, password: password },
       {
@@ -81,6 +78,12 @@ export default function LoginPage() {
             Ainda não tens uma conta?{" "}
             <Link href="/cadastrar" className="underline font-medium">
               Criar Conta
+            </Link>
+          </p>
+
+          <p className="text-sm text-center mt-4">
+            <Link href="/" className="underline font-medium">
+              Voltar para página inicial
             </Link>
           </p>
         </CardContent>

@@ -9,7 +9,7 @@ import { UserService } from "@/services/user.service";
 const user = new UserService();
 
 export function AppHeader() {
-  // const { data, result } = useGetLoggedUser();
+  const { data, result } = useGetLoggedUser();
   // const { mutationLogOut } = useActionUser();
   const router = useRouter();
 
@@ -36,12 +36,12 @@ export function AppHeader() {
         </div>
       </div>
 
-      {/* {result.isSuccess && data && (
+      {result.isSuccess && data && (
         <div className="ml-auto flex flex-col gap-1 items-center">
           <UserCircle />
           <p>{data.username.split(" ")[0].toUpperCase()}</p>
         </div>
-      )} */}
+      )}
     </header>
   );
 }

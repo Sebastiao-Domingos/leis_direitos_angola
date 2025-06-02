@@ -20,7 +20,9 @@ export default function RegisterPage() {
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    // Lógica de cadastro aqui
+
+    setIsLoading(true);
+
     mutationRegister.mutateAsync(
       {
         username: name,
@@ -30,18 +32,15 @@ export default function RegisterPage() {
         onError(erros) {
           console.log(erros);
         },
+        onSuccess() {
+          setTimeout(() => {
+            setIsLoading(false);
+
+            router.push("/login");
+          }, 4000);
+        },
       }
     );
-
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-
-      if (mutationRegister.isSuccess) {
-        router.push("/login");
-      }
-    }, 4000);
   };
 
   return (
@@ -108,6 +107,11 @@ export default function RegisterPage() {
             Já tens uma conta?{" "}
             <Link href="/login" className="underline font-medium">
               Iniciar Sessão
+            </Link>
+          </p>
+          <p className="text-sm text-center mt-4">
+            <Link href="/" className="underline font-medium">
+              Voltar para a página inicial
             </Link>
           </p>
         </CardContent>
