@@ -64,7 +64,7 @@ export default function Home() {
           className="flex justify-center" // <-- Centraliza o botão
         >
           <Button
-            onClick={() => navigator.push("/conversar")}
+            onClick={() => navigator.push("/sango-luzingo/conversar")}
             size="lg"
             className="px-10 py-7 text-xl rounded-full flex items-center gap-4 bg-yellow-500 text-black hover:bg-yellow-400 shadow-xl hover:scale-105 transition-transform"
           >
