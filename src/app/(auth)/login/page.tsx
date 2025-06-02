@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useActionUser } from "@/hooks/user/useUserAction";
+import { on } from "events";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,17 +27,19 @@ export default function LoginPage() {
         onError(error) {
           console.log(error);
         },
+        onSuccess(data) {
+          console.log(data);
+
+          setTimeout(() => {
+            setLoading(false);
+
+            if (mutationLogin.isSuccess) {
+              router.push("/sango-luzingo");
+            }
+          }, 2000);
+        },
       }
     );
-
-    setTimeout(() => {
-      setLoading(false);
-
-      if (mutationLogin.isSuccess) {
-        console.log("ola");
-        router.push("/sango-luzingo");
-      }
-    }, 4000);
   };
 
   return (
