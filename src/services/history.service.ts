@@ -7,12 +7,12 @@ interface ChatType {
   text: string;
 }
 
-interface HistoryType {
+export interface HistoryType {
   user: number;
   conversations?: ConversationType[];
 }
 
-interface ConversationType {
+export interface ConversationType {
   id?: number;
   title: string;
   createdAt: Date;
@@ -61,7 +61,6 @@ export class HistoryService {
     );
 
     const userHistory = storedHistory.find((hist) => hist.user === user.id!);
-    console.log("user history : ", userHistory);
 
     if (!userHistory) {
       return undefined;
@@ -200,9 +199,35 @@ export class HistoryService {
     }
   }
 
-  async clearHistory(userId: number): Promise<void> {
+  async clearHistory({ hist_id }: { hist_id: number }): Promise<boolean> {
+    const historico = await getHistory();
+
+    if (!historico) {
+      throw new Error("Histórico não encontrado");
+    }
+
+    if (!historico.conversations || historico.conversations.length === 0) {
+      throw new Error("Histórico vazio");
+    }
+
+    historico.conversations = historico.conversations.filter(
+      (conversation) => conversation.id !== hist_id
+    );
+
+    const historicos = JSON.parse(
+      localStorage.getItem(`history`) || "[]"
+    ) as HistoryType[];
+
+    historicos.forEach((histor) => {
+      if (histor.user === historico.user) {
+        histor.conversations = historico.conversations;
+      }
+    });
+
+    localStorage.setItem(`history`, JSON.stringify(historicos));
+
+    return true;
     // Clear the history for the user
-    localStorage.removeItem(`history_${userId}`);
   }
 
   async deleteChat({

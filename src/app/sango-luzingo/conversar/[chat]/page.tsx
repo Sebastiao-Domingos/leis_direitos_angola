@@ -100,7 +100,10 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
             userId: user?.id!, // Substitua pelo ID do usuário real
             chat: messages,
             conversationId: Number(params.chat), // Substitua pelo ID da conversa real
-            title: messages.length > 2 ? messages[2].text : "Nova conversa",
+            title:
+              conversation?.chats?.length! > 2
+                ? conversation?.chats?.[2]?.text!
+                : "Nova conversa",
           });
         },
         onError: () => {

@@ -6,15 +6,6 @@ const controller = new HistoryService();
 export function useActionHistory() {
   const queryFronecidor = useQueryClient();
 
-  // const mutationSaveChat = useMutation({
-  //   mutationFn: controller.saveChat,
-  //   onSuccess() {
-  //     queryFronecidor.invalidateQueries({
-  //       queryKey: ["history"],
-  //     });
-  //   },
-  // });
-
   const mutationDeleteChat = useMutation({
     mutationFn: controller.deleteChat,
     onSuccess() {

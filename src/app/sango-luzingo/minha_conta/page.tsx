@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useActionHistory } from "@/hooks/history/useActionHistory";
 import { useGetHistory } from "@/hooks/history/useGetHistory";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
-import { Eye } from "lucide-react";
+import { ConversationType, HistoryType } from "@/services/history.service";
+import { Delete, Eye, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Perfil() {
@@ -153,24 +155,83 @@ export default function Perfil() {
               {histories &&
                 histories.conversations &&
                 histories.conversations.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="cursor-pointer hover:bg-secondary/20"
-                    onClick={() =>
-                      router.push(`/sango-luzingo/conversar/${item.id}`)
-                    }
-                  >
-                    <td className="border px-4 py-2">
-                      {item.createdAt.toString().split("T")[0]}
-                    </td>
-                    <td className="border px-4 py-2">{item.title}</td>
-                    <td className="border px-4 py-2">Respondido</td>
-                  </tr>
+                  // <tr key={item.id} className="hover:bg-slate-100/10">
+                  //   <td className="border px-4 py-2">
+                  //     {item.createdAt.toString().split("T")[0]}
+                  //   </td>
+                  //   <td className="border px-4 py-2">{item.title}</td>
+                  //   <td className="border px-4 py-2 space-x-4 text-right">
+                  //     <Button
+                  //       size={"icon"}
+                  //       className="bg-transparent hover:bg-secondary/30 transition-colors text-secondary"
+                  //       onClick={() =>
+                  //         router.push(`/sango-luzingo/conversar/${item.id}`)
+                  //       }
+                  //     >
+                  //       <Eye />
+                  //     </Button>
+
+                  //     <Button
+                  //       size={"icon"}
+                  //       className="bg-transparent hover:bg-primary/30 transition-colors"
+                  //       onClick={() =>
+                  //         router.push(`/sango-luzingo/conversar/${item.id}`)
+                  //       }
+                  //     >
+                  //       <Trash />
+                  //     </Button>
+                  //   </td>
+                  // </tr>
+                  <TRow item={item} key={item.id} />
                 ))}
             </tbody>
           </table>
         </section>
       </div>
     </main>
+  );
+}
+
+export function TRow({ item }: { item: ConversationType }) {
+  const router = useRouter();
+  const { mutationClearHistory } = useActionHistory();
+
+  const handleDelete = () => {
+    mutationClearHistory.mutateAsync(
+      { hist_id: item.id! },
+      {
+        onSuccess: () => {
+          router.refresh();
+        },
+        onError() {
+          console.error("Erro ao deletar a conversa");
+        },
+      }
+    );
+  };
+  return (
+    <tr key={item.id} className="hover:bg-slate-100/10">
+      <td className="border px-4 py-2">
+        {item.createdAt.toString().split("T")[0]}
+      </td>
+      <td className="border px-4 py-2">{item.title}</td>
+      <td className="border px-4 py-2 space-x-4 text-right">
+        <Button
+          size={"icon"}
+          className="bg-transparent hover:bg-secondary/30 transition-colors text-secondary"
+          onClick={() => router.push(`/sango-luzingo/conversar/${item.id}`)}
+        >
+          <Eye />
+        </Button>
+
+        <Button
+          size={"icon"}
+          className="bg-transparent hover:bg-primary/30 transition-colors"
+          onClick={handleDelete}
+        >
+          <Trash />
+        </Button>
+      </td>
+    </tr>
   );
 }
