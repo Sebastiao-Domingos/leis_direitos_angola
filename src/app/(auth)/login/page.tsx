@@ -33,9 +33,7 @@ export default function LoginPage() {
           setTimeout(() => {
             setLoading(false);
 
-            if (mutationLogin.isSuccess) {
-              router.push("/sango-luzingo");
-            }
+            router.push("/sango-luzingo");
           }, 2000);
         },
       }
@@ -49,7 +47,10 @@ export default function LoginPage() {
           <CardTitle className="text-center text-2xl">Iniciar Sessão</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form
+            onSubmit={handleLogin}
+            className="space-y-4 placeholder:text-slate-100"
+          >
             <div>
               <label className="block mb-1 text-sm font-medium">
                 Nome do Usuário
