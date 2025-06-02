@@ -7,6 +7,7 @@ import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
 import { ConversationType, HistoryType } from "@/services/history.service";
 import { Delete, Eye, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Perfil() {
   const router = useRouter();
@@ -155,33 +156,6 @@ export default function Perfil() {
               {histories &&
                 histories.conversations &&
                 histories.conversations.map((item) => (
-                  // <tr key={item.id} className="hover:bg-slate-100/10">
-                  //   <td className="border px-4 py-2">
-                  //     {item.createdAt.toString().split("T")[0]}
-                  //   </td>
-                  //   <td className="border px-4 py-2">{item.title}</td>
-                  //   <td className="border px-4 py-2 space-x-4 text-right">
-                  //     <Button
-                  //       size={"icon"}
-                  //       className="bg-transparent hover:bg-secondary/30 transition-colors text-secondary"
-                  //       onClick={() =>
-                  //         router.push(`/sango-luzingo/conversar/${item.id}`)
-                  //       }
-                  //     >
-                  //       <Eye />
-                  //     </Button>
-
-                  //     <Button
-                  //       size={"icon"}
-                  //       className="bg-transparent hover:bg-primary/30 transition-colors"
-                  //       onClick={() =>
-                  //         router.push(`/sango-luzingo/conversar/${item.id}`)
-                  //       }
-                  //     >
-                  //       <Trash />
-                  //     </Button>
-                  //   </td>
-                  // </tr>
                   <TRow item={item} key={item.id} />
                 ))}
             </tbody>
@@ -201,9 +175,11 @@ export function TRow({ item }: { item: ConversationType }) {
       { hist_id: item.id! },
       {
         onSuccess: () => {
+          toast.success("Conversa deletada com sucesso!");
           router.refresh();
         },
         onError() {
+          toast.error("Erro ao deletar a conversa");
           console.error("Erro ao deletar a conversa");
         },
       }

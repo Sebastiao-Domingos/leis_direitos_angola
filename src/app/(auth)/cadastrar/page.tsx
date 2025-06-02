@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { useActionUser } from "@/hooks/user/useUserAction";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -31,8 +32,12 @@ export default function RegisterPage() {
       {
         onError(erros) {
           console.log(erros);
+          setIsLoading(false);
+          toast.error("Erro ao cadastrar!");
         },
         onSuccess() {
+          toast.success("Cadastrato realizado com sucesso!");
+
           setTimeout(() => {
             setIsLoading(false);
 

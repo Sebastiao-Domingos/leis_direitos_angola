@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useActionUser } from "@/hooks/user/useUserAction";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,9 +24,11 @@ export default function LoginPage() {
       {
         onError(error) {
           console.log(error);
+          setLoading(false);
+          toast.error("Erro ao realizar login!");
         },
         onSuccess(data) {
-          console.log(data);
+          toast.success("Login realizado com sucesso!");
 
           setTimeout(() => {
             setLoading(false);

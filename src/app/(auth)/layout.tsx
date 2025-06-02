@@ -2,6 +2,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
 
 export default function LayoutSCreen({
   children,
@@ -57,6 +58,8 @@ export default function LayoutSCreen({
             </svg>
           </div>
           {children}
+
+          <Toaster />
         </main>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

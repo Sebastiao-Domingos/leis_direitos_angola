@@ -5,6 +5,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppHeader } from "@/components/section/header";
 import { AppSidebar } from "@/components/section/side-bar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
 
 export default function LayoutSCreen({
   children,
@@ -99,6 +100,8 @@ export default function LayoutSCreen({
             </div>
 
             {children}
+
+            <Toaster />
           </main>
         </SidebarProvider>
         <ReactQueryDevtools initialIsOpen={false} />
