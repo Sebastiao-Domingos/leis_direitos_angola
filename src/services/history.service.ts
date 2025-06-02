@@ -236,9 +236,12 @@ export class HistoryService {
     if (!history) {
       return 1;
     }
-    return history.conversations?.length
-      ? history.conversations?.length + 1
-      : 1;
+
+    if (!history.conversations || history.conversations.length === 0) {
+      return 1;
+    }
+
+    return history.conversations[history.conversations?.length - 1].id! + 1;
   }
 }
 

@@ -15,7 +15,7 @@ export function useGetHistory() {
 export function useGetHistoryConversation(conv_id: number) {
   const { data, ...result } = useQuery({
     queryFn: () => history.getConversationById({ conv_id }),
-    queryKey: ["histories"],
+    queryKey: ["histories", conv_id],
   });
 
   return { data, result };
