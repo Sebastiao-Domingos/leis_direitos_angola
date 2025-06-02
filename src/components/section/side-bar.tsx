@@ -5,6 +5,7 @@ import * as React from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenuButton,
   SidebarRail,
@@ -13,14 +14,18 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import { Menudata } from "@/data";
 import { NavList } from "../ui/nav-list";
+import { LogOut } from "lucide-react";
+import { UserService } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { navMain, navSetting } = Menudata;
   const { open } = useSidebar();
+  const { logout } = useUser();
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <div className="h-full bg-gradient-to-br from-black/80 /via-primary/80 to-primary/70">
+      <div className="h-full flex flex-col bg-gradient-to-br from-black/80 /via-primary/80 to-primary/70">
         <SidebarHeader className="bg-transparent">
           <SidebarMenuButton
             size="lg"
@@ -48,6 +53,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {!navSetting.length && !navMain.length && <SkeletonMenu />}
         </SidebarContent>
         <SidebarRail />
+        <SidebarFooter className="mt-auto bg-transparent">
+          <SidebarMenuButton
+            onClick={async () => {
+              await logout();
+            }}
+            size="lg"
+            variant={"outline"}
+            className="w-full bg-transparent hover:bg-transparent !border-none flex justify-center items-center text-xl border-secondary/40 text-white hover:text-secondary transition-colors duration-300"
+          >
+            <LogOut size={45} /> Sair
+          </SidebarMenuButton>
+        </SidebarFooter>
       </div>
     </Sidebar>
   );
@@ -70,4 +87,19 @@ function SkeletonMenu() {
       </div>
     </div>
   );
+}
+
+function useUser() {
+  const router = useRouter();
+
+  const user = new UserService();
+  const logout = async () => {
+    await user.logout();
+
+    router.push("/");
+  };
+
+  return {
+    logout,
+  };
 }

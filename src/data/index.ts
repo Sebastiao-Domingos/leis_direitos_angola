@@ -9,12 +9,12 @@ export const Menudata = {
   navMain: [
     {
       title: "Início",
-      url: "/",
+      url: "/sango-luzingo",
       icon: Home,
     },
     {
       title: "Nova Conversa",
-      url: "/conversar",
+      url: "/sango-luzingo/conversar",
       icon: MessageCircle,
     },
   ],
@@ -22,13 +22,13 @@ export const Menudata = {
   navSetting: [
     {
       title: "Configurações",
-      url: "/configuracoes",
+      url: "/sango-luzingo/configuracoes",
       icon: FileArchive,
     },
 
     {
       title: "Minha Conta",
-      url: "/minha_conta",
+      url: "/sango-luzingo/minha_conta",
       icon: UserCircle,
     },
   ],
