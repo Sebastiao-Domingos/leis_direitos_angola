@@ -23,7 +23,6 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 
   const handleSend = () => {
     if (!message.trim()) return;
-    console.log("Mensagem enviada:", message);
     onSendMessage(message); // Chama a função para enviar a mensagem
     setMessage("");
     setIsFocused(false);
@@ -38,7 +37,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
       <motion.div
         animate={{ height: isFocused || message ? 120 : 62 }}
         transition={{ type: "spring", duration: 0.3 }}
-        className="w-full max-w-md bg-slate-100/20 border border-border rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto"
+        className="w-full max-w-md bg-gray-700/50 border border-border rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto"
       >
         <motion.textarea
           ref={textareaRef}
