@@ -18,7 +18,9 @@ interface ChatMessage {
 // const service_history = new HistoryService();
 
 export default function ChatPage() {
+  const { data: user, result } = useGetLoggedUser();
   const { mutationCreate } = useActionChats();
+  const router = useRouter();
   // const { mutationSaveChat } = useActionHistory();
   const { index, result: result_index } = useGetLastIndexConversation();
   const [loading, setLoading] = useState(false);
@@ -36,8 +38,6 @@ export default function ChatPage() {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const { data: user, result } = useGetLoggedUser();
 
   if (result.isFetching || result_index.isFetching) {
     return (

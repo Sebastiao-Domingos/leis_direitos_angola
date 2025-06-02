@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Perfil() {
-  const router = useRouter();
   const { data } = useGetLoggedUser();
+  const router = useRouter();
 
   const { data: histories, result: result_history } = useGetHistory();
 

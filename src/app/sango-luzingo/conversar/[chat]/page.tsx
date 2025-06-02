@@ -19,14 +19,13 @@ interface ChatMessage {
 const service_history = new HistoryService();
 
 export default function ChatPage({ params }: { params: { chat: number } }) {
+  const { data: user, result } = useGetLoggedUser();
   const { mutationCreate } = useActionChats();
   const [loading, setLoading] = useState(false);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { data: conversation, result: result_conversation } =
     useGetHistoryConversation(Number(params.chat));
-  const { data: user, result } = useGetLoggedUser();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
@@ -89,8 +88,8 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
             chat: messages,
             conversationId: Number(params.chat), // Substitua pelo ID da conversa real
             title:
-              conversation?.chats?.length! > 2
-                ? conversation?.chats?.[2]?.text!
+              (conversation?.chats?.length ?? 0) > 2
+                ? conversation?.chats?.[2]?.text ?? "Nova conversa"
                 : "Nova conversa",
           });
         },

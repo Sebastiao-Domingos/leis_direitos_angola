@@ -21,6 +21,7 @@ export interface ConversationType {
 
 const userService = new UserService();
 
+//@typescript-eslint/no-unused-vars
 export class HistoryService {
   async getHistory(): Promise<HistoryType | undefined> {
     const user = await userService.getUserLogged();
