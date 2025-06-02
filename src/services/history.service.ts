@@ -1,4 +1,5 @@
 import { title } from "process";
+import { UserService } from "./user.service";
 
 interface ChatType {
   id: number;
@@ -18,19 +19,62 @@ interface ConversationType {
   chats: ChatType[];
 }
 
-export class HistoryService {
-  async getHistory(userId: number): Promise<HistoryType | undefined> {
-    // Simulate fetching history from a database or API
-    const storedHistory = localStorage.getItem(`history_${userId}`);
+const userService = new UserService();
 
-    if (storedHistory) {
-      return JSON.parse(storedHistory);
+export class HistoryService {
+  async getHistory(): Promise<HistoryType | undefined> {
+    const user = await userService.getUserLogged();
+
+    if (!user) {
+      throw new Error("Erro ao pegar o dado do usuário");
+    }
+
+    // Simulate fetching history from a database or API
+    const storedHistory: HistoryType[] = JSON.parse(
+      localStorage.getItem(`history`) || "[]"
+    );
+
+    const userHistory = storedHistory.find((hist) => hist.user === user.id!);
+
+    if (userHistory) {
+      return userHistory;
     }
 
     // If no history found, return empty history
     return undefined;
   }
 
+  async getConversationById({
+    conv_id,
+  }: {
+    conv_id: number;
+  }): Promise<ConversationType | undefined> {
+    const user = await userService.getUserLogged();
+
+    if (!user) {
+      throw new Error("Erro ao pegar o dado do usuário");
+    }
+
+    // Simulate fetching history from a database or API
+    const storedHistory: HistoryType[] = JSON.parse(
+      localStorage.getItem(`history`) || "[]"
+    );
+
+    const userHistory = storedHistory.find((hist) => hist.user === user.id!);
+    console.log("user history : ", userHistory);
+
+    if (!userHistory) {
+      return undefined;
+    }
+
+    const userConversation = userHistory.conversations?.find(
+      (item) => item.id === conv_id
+    );
+
+    console.log("user converstion : ", userConversation);
+
+    return userConversation;
+  }
   saveChat({
     chat,
     userId,
@@ -168,7 +212,7 @@ export class HistoryService {
     userId: number;
     chatId: number;
   }): Promise<void> {
-    const history = await this.getHistory(userId);
+    const history = await this.getHistory();
 
     // Filter out the chat to be deleted
     if (history!.conversations) {
@@ -185,4 +229,37 @@ export class HistoryService {
     // Clear the history for the user
     localStorage.removeItem(`history_${userId}`);
   }
+
+  async getLastIndexConversation(): Promise<number> {
+    const history = await getHistory();
+
+    if (!history) {
+      return 1;
+    }
+    return history.conversations?.length
+      ? history.conversations?.length + 1
+      : 1;
+  }
+}
+
+async function getHistory(): Promise<HistoryType | undefined> {
+  const user = await userService.getUserLogged();
+
+  if (!user) {
+    throw new Error("Erro ao pegar o dado do usuário");
+  }
+
+  // Simulate fetching history from a database or API
+  const storedHistory: HistoryType[] = JSON.parse(
+    localStorage.getItem(`history`) || "[]"
+  );
+
+  const userHistory = storedHistory.find((hist) => hist.user === user.id!);
+
+  if (userHistory) {
+    return userHistory;
+  }
+
+  // If no history found, return empty history
+  return undefined;
 }

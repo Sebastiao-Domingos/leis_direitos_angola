@@ -9,6 +9,7 @@ import { useActionHistory } from "@/hooks/history/useActionHistory";
 import { HistoryService } from "@/services/history.service";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
 import { useRouter } from "next/navigation";
+import { useGetLastIndexConversation } from "@/hooks/history/useGetHistory";
 
 interface ChatMessage {
   id: number;
@@ -16,11 +17,12 @@ interface ChatMessage {
   text: string;
 }
 
-const service_history = new HistoryService();
+// const service_history = new HistoryService();
 
 export default function ChatPage() {
   const { mutationCreate } = useActionChats();
   // const { mutationSaveChat } = useActionHistory();
+  const { index, result: result_index } = useGetLastIndexConversation();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -31,7 +33,7 @@ export default function ChatPage() {
     {
       id: 2,
       sender: "agent",
-      text: "Claro! Podemos conversar sobre saúde, educação, identidade e muito mais. Qual tema deseja aprofundar?",
+      text: "Claro! Podemos conversar sobre leis, direitos, identidade e muito mais. Qual tema deseja aprofundar?",
     },
   ]);
 
@@ -39,7 +41,7 @@ export default function ChatPage() {
   const router = useRouter();
   const { data: user, result } = useGetLoggedUser();
 
-  if (result.isFetching) {
+  if (result.isFetching || result_index.isFetching) {
     return (
       <div className="relative flex items-center justify-center h-screen">
         <p className="text-white">Carregando...</p>
@@ -47,7 +49,7 @@ export default function ChatPage() {
     );
   }
 
-  if (result.isError) {
+  if (result.isError || result_index.isError) {
     return (
       <div className="relative flex items-center justify-center h-screen">
         <p className="text-red-500">Erro ao carregar usuário.</p>
@@ -55,11 +57,13 @@ export default function ChatPage() {
     );
   }
 
-  if (!user) {
+  if (!user || !index) {
     router.push("/login");
 
     return;
   }
+
+  router.push(`/sango-luzingo/conversar/${index}`);
 
   // useEffect(() => {
   //   if (messagesEndRef.current) {
@@ -76,39 +80,38 @@ export default function ChatPage() {
     setMessages((prev) => [...prev, newUserMessage]);
     setLoading(true);
 
-    mutationCreate.mutateAsync(
-      {
-        chatInput: newMessageText,
-        session_id: "da04f151-3438-46a5-8089-a7691f9271d3",
-      },
-      {
-        onSuccess: (data) => {
-          const agentResponse: ChatMessage = {
-            id: messages.length + 2,
-            sender: "agent",
-            text: data,
-          };
-          setMessages((prev) => [...prev, agentResponse]);
-          setLoading(false);
+    // mutationCreate.mutateAsync(
+    //   {
+    //     chatInput: newMessageText,
+    //     session_id: "da04f151-3438-46a5-8089-a7691f9271d3",
+    //   },
+    //   {
+    //     onSuccess: (data) => {
+    //       const agentResponse: ChatMessage = {
+    //         id: messages.length + 2,
+    //         sender: "agent",
+    //         text: data,
+    //       };
+    //       setMessages((prev) => [...prev, agentResponse]);
+    //       setLoading(false);
 
-          service_history.saveChat({
-            userId: user.id!, // Substitua pelo ID do usuário real
-            chat: messages,
-            conversationId: 1, // Substitua pelo ID da conversa real
-            title: messages.length > 2 ? messages[2].text : "Nova conversa",
-          });
-        },
-        onError: () => {
-          const errorResponse: ChatMessage = {
-            id: messages.length + 2,
-            sender: "agent",
-            text: "Erro ao enviar mensagem.",
-          };
-          setMessages((prev) => [...prev, errorResponse]);
-          setLoading(false);
-        },
-      }
-    );
+    //       service_history.saveChat({
+    //         userId: user.id!, // Substitua pelo ID do usuário real
+    //         chat: messages,
+    //         title: messages.length > 2 ? messages[2].text : "Nova conversa",
+    //       });
+    //     },
+    //     onError: () => {
+    //       const errorResponse: ChatMessage = {
+    //         id: messages.length + 2,
+    //         sender: "agent",
+    //         text: "Erro ao enviar mensagem.",
+    //       };
+    //       setMessages((prev) => [...prev, errorResponse]);
+    //       setLoading(false);
+    //     },
+    //   }
+    // );
   };
 
   return (
