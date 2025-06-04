@@ -17,11 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useTextSpeech from "@/hooks/textToSpeech/useSpeechToText";
+import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
 import { Button } from "../ui/button";
 export function AppHeader() {
   const { data, result } = useGetLoggedUser();
-  const { isSpeaking, isListening } = useTextSpeech({ lang: "pt-BR" });
+  const { isSpeaking, isListening } = useSpeechToText({ lang: "pt-BR" });
 
   return (
     <header className="px-6 py-4 shadow-md flex items-center gap-4 sticky top-0 z-40 text-white bg-gradient-to-br from-black/90 /via-primary/90 to-primary/80">
@@ -66,7 +66,7 @@ export function AppHeader() {
 
 function Settins() {
   const { voices, selectedVoice, setSelectedVoice, volume, rate } =
-    useTextSpeech({ lang: "pt-BR" });
+    useSpeechToText({ lang: "pt-BR" });
 
   return (
     <div className="flex items-center justify-between">

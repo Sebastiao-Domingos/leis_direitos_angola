@@ -2,7 +2,10 @@
 
 import { useState, useRef, useEffect, Dispatch } from "react";
 import { motion } from "framer-motion";
-import { SendHorizonal } from "lucide-react";
+import { Mic, Pause, Play, SendHorizonal } from "lucide-react";
+import { Button } from "../ui/button";
+import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
+import { toast } from "sonner";
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -10,6 +13,18 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ onSendMessage }: ChatInputProps) {
+  const {
+    text,
+    setText,
+    isSpeaking,
+    isListening,
+    isPaused,
+    pause,
+    resume,
+    toggleListening,
+    supported,
+  } = useSpeechToText({ lang: "pt-BR" });
+
   const [isFocused, setIsFocused] = useState(false);
   const [message, setMessage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -20,6 +35,14 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [message]);
+
+  useEffect(() => {
+    if (text && !isListening) {
+      // setMessage(text);
+
+      onSendMessage(text);
+    }
+  }, [text, isListening]);
 
   const handleSend = () => {
     if (!message.trim()) return;
@@ -37,7 +60,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
       <motion.div
         animate={{ height: isFocused || message ? 120 : 62 }}
         transition={{ type: "spring", duration: 0.3 }}
-        className="w-full max-w-md /bg-gray-700/50 /border /border-border rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto bg-gradient-to-br from-black/90 via-primary/40 to-black/90"
+        className="w-full max-w-md rounded-2xl px-4 py-2 shadow-xl flex items-end gap-2 transition-all duration-300 pointer-events-auto bg-gradient-to-br from-black/40 /via-primary/40 to-black/30"
       >
         <motion.textarea
           ref={textareaRef}
@@ -47,7 +70,10 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
           onBlur={() => {
             if (!message.trim()) setIsFocused(false);
           }}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={(e) => {
+            setMessage(e.target.value);
+            setText(e.currentTarget.value);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -60,19 +86,63 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
           className="flex-1 resize-none border border-secondary/50 rounded-lg p-2 bg-transparent placeholder:text-slate-100 text-[16px] font-bold text-white outline-none overflow-hidden"
         />
 
-        <motion.button
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={handleSend}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{
-            scale: 0.9,
-            boxShadow: "0 0 0 4px rgba(0, 123, 255, 0.2)",
-          }}
-          className="bg-primary text-primary-foreground p-2 rounded-full transition shadow-md"
-        >
-          <SendHorizonal size={18} />
-        </motion.button>
+        <div className={`flex gap-3 ${isFocused && "flex-col"}`}>
+          <Button
+            type="button"
+            size="icon"
+            className={`rounded-full w-10 h-10 ${
+              isListening
+                ? "bg-red-600 hover:bg-red-700 animate-pulse"
+                : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+            }`}
+            onClick={toggleListening}
+            disabled={!supported}
+          >
+            <Mic className="w-5 h-5" size={18} />
+          </Button>
+
+          {isSpeaking && !isPaused && (
+            <Button
+              type="button"
+              size="icon"
+              className="rounded-full bg-yellow-500 hover:bg-yellow-600"
+              onClick={pause}
+            >
+              <Pause className="w-5 h-5" />
+            </Button>
+          )}
+
+          {isPaused && (
+            <Button
+              type="button"
+              size="icon"
+              className="rounded-full bg-yellow-500 hover:bg-yellow-600"
+              onClick={resume}
+            >
+              <Play className="w-5 h-5" />
+            </Button>
+          )}
+
+          <motion.button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={handleSend}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{
+              scale: 0.9,
+              boxShadow: "0 0 0 4px rgba(0, 123, 255, 0.2)",
+            }}
+            disabled={!message.trim()}
+            className="bg-primary w-10 h-10 flex justify-center items-center text-primary-foreground p-2 rounded-full transition shadow-md"
+          >
+            <SendHorizonal size={18} />
+          </motion.button>
+        </div>
       </motion.div>
+
+      {!supported &&
+        toast.warning(
+          "Seu navegador não suporta reconhecimento ou síntese de voz"
+        )}
     </motion.div>
   );
 }

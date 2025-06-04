@@ -41,7 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useTextSpeech from "@/hooks/textToSpeech/useSpeechToText";
+import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
 
 interface Message {
   id: string;
@@ -80,7 +80,7 @@ export default function ChatPage() {
     volume,
     rate,
     pitch,
-  } = useTextSpeech({ lang: "pt-BR" });
+  } = useSpeechToText({ lang: "pt-BR" });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

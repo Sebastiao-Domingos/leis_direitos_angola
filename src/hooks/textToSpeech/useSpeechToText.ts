@@ -143,7 +143,7 @@ interface UseTextSpeechOptions {
   pitch?: number;
 }
 
-export default function useTextSpeech(options: UseTextSpeechOptions = {}) {
+export default function useSpeechToText(options: UseTextSpeechOptions = {}) {
   const {
     lang = "pt-BR",
     continuous = false,

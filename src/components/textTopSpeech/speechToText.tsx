@@ -1,6 +1,6 @@
 // components/TextToSpeech.tsx
 "use client";
-import useTextSpeech from "@/hooks/textToSpeech/useSpeechToText";
+import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
 
 const TextToSpeech = () => {
   const {
@@ -15,7 +15,7 @@ const TextToSpeech = () => {
     startListening,
     stopListening,
     recognitionError,
-  } = useTextSpeech();
+  } = useSpeechToText();
 
   return (
     <div className="max-w-md mx-auto p-4">
