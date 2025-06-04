@@ -72,14 +72,12 @@ export default function ChatPage() {
     selectedVoice,
     setSelectedVoice,
     speak,
-    stopSpeaking,
     pause,
     resume,
     toggleListening,
     supported,
     volume,
     rate,
-    pitch,
   } = useSpeechToText({ lang: "pt-BR" });
 
   const scrollToBottom = () => {

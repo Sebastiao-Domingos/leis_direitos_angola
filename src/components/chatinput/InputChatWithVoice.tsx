@@ -1,46 +1,11 @@
-// // app/page.tsx
-
-// import TextToSpeech from "@/components/textTopSpeech/speechToText";
-
-// export default function Home() {
-//   return (
-//     <main className="min-h-screen p-24">
-//       <h1 className="text-2xl font-bold mb-8">Leitor de Texto</h1>
-//       <TextToSpeech />
-//     </main>
-//   );
-// }
-// //
-
 // app/chat/page.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  SendHorizonal,
-  Mic,
-  Volume2,
-  Pause,
-  Play,
-  Settings,
-} from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SendHorizonal, Mic, Pause, Play } from "lucide-react";
+
 import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
 
 interface Message {
