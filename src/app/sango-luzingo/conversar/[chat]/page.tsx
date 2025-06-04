@@ -179,14 +179,17 @@ import { useGetHistoryConversation } from "@/hooks/history/useGetHistory";
 import { format, set } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
+  AudioLines,
   Copy,
   Megaphone,
   MegaphoneOffIcon,
   MicVocal,
   Voicemail,
+  VolumeX,
 } from "lucide-react";
 import useTextSpeech from "@/hooks/textToSpeech/useTextToSpeech";
 import { cleanHtmlText } from "@/helpers/clearHtml";
+import { Button } from "@/components/ui/button";
 
 interface ChatMessage {
   id: number;
@@ -198,7 +201,6 @@ interface ChatMessage {
 const service_history = new HistoryService();
 
 export default function ChatPage({ params }: { params: { chat: number } }) {
-  const { setText, isSpeaking, speak, stop } = useTextSpeech();
   const { data: user, result } = useGetLoggedUser();
   const { mutationCreate } = useActionChats();
   const [loading, setLoading] = useState(false);
@@ -304,69 +306,71 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
               </span>
             </div>
             {msgs.map((msg, index) => (
-              <motion.div
-                key={msg.id + index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className={`flex ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                } gap-2 mb-2`}
-              >
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${
-                    msg.sender === "user"
-                      ? "bg-yellow-400 text-black"
-                      : "bg-red-600 text-black"
-                  }`}
-                >
-                  {msg.sender === "user" ? "👤" : "⚖️"}
-                </div>
-                <div
-                  className={`relative group px-4 py-4 rounded-2xl max-w-sm shadow-lg ${
-                    msg.sender === "user"
-                      ? "bg-yellow-500 text-black min-w-[200px] max-w-[600px]"
-                      : "bg-primary/40 text-white min-w-[200px] max-w-[600px]"
-                  }`}
-                >
-                  <button
-                    onClick={() =>
-                      navigator.clipboard.writeText(cleanHtmlText(msg.text))
-                    }
-                    className="absolute bottom-2 right-2 text-xs text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition"
-                    title="Copiar"
-                  >
-                    <Copy size={20} />
-                  </button>
-                  <div className="absolute top-2 right-2 flex items-center gap-2">
-                    {!isSpeaking && (
-                      <button
-                        onClick={() => {
-                          const text = cleanHtmlText(msg.text);
-                          setText(text);
-                          speak();
-                        }}
-                      >
-                        {/* <MicVocal /> */}
-                        <Megaphone size={20} />
-                      </button>
-                    )}
-                    {isSpeaking && (
-                      <button onClick={stop}>
-                        <MegaphoneOffIcon />
-                      </button>
-                    )}
-                  </div>
-                  {msg.sender === "agent" ? (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: msg.text }}
-                      className="prose prose-sm max-w-none text-white"
-                    />
-                  ) : (
-                    msg.text
-                  )}
-                </div>
-              </motion.div>
+              // <motion.div
+              //   key={msg.id + index}
+              //   initial={{ opacity: 0, y: 10 }}
+              //   animate={{ opacity: 1, y: 0 }}
+              //   transition={{ delay: index * 0.05 }}
+              //   className={`flex ${
+              //     msg.sender === "user" ? "justify-end" : "justify-start"
+              //   } gap-2 mb-2`}
+              // >
+              //   <div
+              //     className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${
+              //       msg.sender === "user"
+              //         ? "bg-yellow-400 text-black"
+              //         : "bg-red-600 text-black"
+              //     }`}
+              //   >
+              //     {msg.sender === "user" ? "👤" : "⚖️"}
+              //   </div>
+              //   <div
+              //     className={`relative group px-4 py-4 rounded-2xl max-w-sm shadow-lg ${
+              //       msg.sender === "user"
+              //         ? "bg-yellow-500 text-black min-w-[200px] max-w-[600px]"
+              //         : "bg-primary/40 text-white min-w-[200px] max-w-[600px]"
+              //     }`}
+              //   >
+              //     <button
+              //       onClick={() =>
+              //         navigator.clipboard.writeText(cleanHtmlText(msg.text))
+              //       }
+              //       className="absolute bottom-2 right-2 text-xs text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition"
+              //       title="Copiar"
+              //     >
+              //       <Copy size={20} />
+              //     </button>
+              //     <div className="absolute opacity-0 group-hover:opacity-100 transition-all top-2 right-2 flex items-center gap-2">
+              //       {!isSpeaking && (
+              //         <button
+              //           onClick={() => {
+              //             const text = cleanHtmlText(msg.text);
+              //             setText(text);
+              //             speak();
+              //           }}
+              //           title="Falar"
+              //         >
+              //           <AudioLines size={20} />
+              //         </button>
+              //       )}
+              //       {isSpeaking && (
+              //         <button onClick={stop} title="Parar de Falar">
+              //           <VolumeX size={20} />
+              //         </button>
+              //       )}
+              //     </div>
+              //     {msg.sender === "agent" ? (
+              //       <div
+              //         dangerouslySetInnerHTML={{ __html: msg.text }}
+              //         className="prose prose-sm max-w-none text-white"
+              //       />
+              //     ) : (
+              //       msg.text
+              //     )}
+              //   </div>
+              // </motion.div>
+
+              <CardMessage msg={msg} index={index} key={index} />
             ))}
           </div>
         ))}
@@ -388,29 +392,85 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
   );
 }
 
-function SpeekComponent({ text }: { text: string }) {
-  const { speak, stop, setText } = useTextSpeech();
-
-  setText(text);
-
+export function CardMessage({
+  msg,
+  index,
+}: {
+  msg: ChatMessage;
+  index: number;
+}) {
+  const { setText, isSpeaking, speak, stop } = useTextSpeech();
   return (
-    <div className="absolute bottom-4 right-4 flex gap-2 mt-4">
-      <button
-        onClick={() => {
-          speak();
-        }}
-        className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+    <>
+      <motion.div
+        key={msg.id + index}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className={`flex animate-fade animate-duration-500 ${
+          isSpeaking && "animate-pulse"
+        } ${
+          msg.sender === "user" ? "justify-end" : "justify-start"
+        } gap-2 mb-2`}
       >
-        Falar
-      </button>
-      <button
-        onClick={() => {
-          stop();
-        }}
-        className="bg-red-500 text-white px-4 py-2 rounded disabled:opacity-50 ml-2"
-      >
-        Parar
-      </button>
-    </div>
+        <div
+          className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${
+            msg.sender === "user"
+              ? "bg-yellow-400 text-black"
+              : "bg-red-600 text-black"
+          }`}
+        >
+          {msg.sender === "user" ? "👤" : "⚖️"}
+        </div>
+        <div
+          className={`relative group px-4 py-4 rounded-2xl max-w-sm shadow-lg ${
+            msg.sender === "user"
+              ? "bg-yellow-500 text-black min-w-[200px] max-w-[600px]"
+              : "bg-primary/40 text-white min-w-[200px] max-w-[600px]"
+          }`}
+        >
+          <button
+            onClick={() =>
+              navigator.clipboard.writeText(cleanHtmlText(msg.text))
+            }
+            className="absolute bottom-2 right-2 text-xs text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition"
+            title="Copiar"
+          >
+            <Copy size={20} />
+          </button>
+          <div
+            className={`absolute opacity-0 group-hover:opacity-100 transition-all top-2 right-2 flex items-center gap-2 ${
+              isSpeaking && "opacity-100"
+            }`}
+          >
+            {!isSpeaking && (
+              <button
+                onClick={() => {
+                  const text = cleanHtmlText(msg.text);
+                  setText(text);
+                  speak();
+                }}
+                title="Falar"
+              >
+                <AudioLines size={20} />
+              </button>
+            )}
+            {isSpeaking && (
+              <button onClick={stop} title="Parar de Falar">
+                <VolumeX size={20} />
+              </button>
+            )}
+          </div>
+          {msg.sender === "agent" ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: msg.text }}
+              className="prose prose-sm max-w-none text-white"
+            />
+          ) : (
+            msg.text
+          )}
+        </div>
+      </motion.div>
+    </>
   );
 }

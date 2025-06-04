@@ -12,7 +12,6 @@ const TextToSpeech = () => {
     selectedVoice,
     setSelectedVoice,
     speak,
-    stop,
     startListening,
     stopListening,
     recognitionError,
