@@ -185,6 +185,7 @@ import {
   MegaphoneOffIcon,
   MicVocal,
   Voicemail,
+  Volume2,
   VolumeX,
 } from "lucide-react";
 import useTextSpeech from "@/hooks/textToSpeech/useTextToSpeech";
@@ -443,22 +444,26 @@ export function CardMessage({
               isSpeaking && "opacity-100"
             }`}
           >
-            {!isSpeaking && (
-              <button
-                onClick={() => {
-                  const text = cleanHtmlText(msg.text);
-                  setText(text);
-                  speak();
-                }}
-                title="Falar"
-              >
-                <AudioLines size={20} />
-              </button>
-            )}
-            {isSpeaking && (
-              <button onClick={stop} title="Parar de Falar">
-                <VolumeX size={20} />
-              </button>
+            {msg.sender === "agent" && (
+              <>
+                {!isSpeaking && (
+                  <button
+                    onClick={() => {
+                      const text = cleanHtmlText(msg.text);
+                      setText(text);
+                      speak();
+                    }}
+                    title="Falar"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
+                )}
+                {isSpeaking && (
+                  <button onClick={stop} title="Parar de Falar">
+                    <VolumeX size={20} />
+                  </button>
+                )}
+              </>
             )}
           </div>
           {msg.sender === "agent" ? (
