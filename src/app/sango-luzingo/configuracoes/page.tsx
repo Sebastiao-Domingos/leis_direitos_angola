@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -8,6 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
+import { SelectValue } from "@radix-ui/react-select";
+import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
+import { Slider } from "@/components/ui/slider";
 
 export default function AgentSettingsPage() {
   const [enabled, setEnabled] = useState(true);
@@ -15,6 +24,11 @@ export default function AgentSettingsPage() {
   const handleSave = () => {
     toast.success("Configurações salvas com sucesso!");
   };
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const { voices, selectedVoice, setSelectedVoice, volume, rate } =
+    useSpeechToText({ lang: "pt-BR" });
 
   return (
     <div className="relative max-w-3xl mx-auto py-12 px-4 sm:px-8">
@@ -25,7 +39,7 @@ export default function AgentSettingsPage() {
         </p>
       </div>
 
-      <div className="space-y-8 bg-slate-100/10 text-white dark:bg-muted rounded-xl shadow-md p-6 border">
+      <div className="space-y-8 bg-slate-100/10 text-white dark:bg-muted rounded-xl shadow-md p-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label className="text-base font-medium">Agente Ativo</Label>
@@ -44,11 +58,59 @@ export default function AgentSettingsPage() {
 
             <div className="space-y-2">
               <Label htmlFor="language">Idioma Preferido</Label>
-              <Input
-                id="language"
-                placeholder="Ex: Português, Kimbundu..."
-                defaultValue="Português"
-              />
+
+              <Select>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder="Selecione o idioma"
+                    className="placeholder:text-white"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pt-pt">Português do Protugal</SelectItem>
+                  <SelectItem value="pt-br">Português do Brazil</SelectItem>
+                  <SelectItem value="gl">inglês</SelectItem>
+                  <SelectItem value="fr">Francês</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="voice-select">Voz</Label>
+              <Select value={selectedVoice} onValueChange={setSelectedVoice}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione uma voz" />
+                </SelectTrigger>
+                <SelectContent>
+                  {voices.map((voice) => (
+                    <SelectItem key={voice.name} value={voice.name}>
+                      ({voice.lang}) - {voice.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <div className="space-y-2">
+                <Label htmlFor="volume">Volume: {volume?.toFixed(1)}</Label>
+                <Slider
+                  id="volume"
+                  defaultValue={[volume]}
+                  max={1}
+                  step={0.1}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="rate">Velocidade: {rate?.toFixed(1)}</Label>
+                <Slider
+                  id="rate"
+                  defaultValue={[rate]}
+                  max={2}
+                  min={0.5}
+                  step={0.1}
+                  className="text-secondary"
+                />
+              </div>
             </div>
           </div>
 

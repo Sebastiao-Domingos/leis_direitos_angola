@@ -29,10 +29,10 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
   const { mutationCreate } = useActionChats();
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const { data: conversation, result: result_conversation } =
     useGetHistoryConversation(Number(params.chat));
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (conversation) {
@@ -165,6 +165,7 @@ export function CardMessage({
   index: number;
 }) {
   const { setText, isSpeaking, speak, stop } = useTextSpeech();
+
   return (
     <>
       <motion.div

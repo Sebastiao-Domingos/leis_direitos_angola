@@ -1,8 +1,7 @@
 import { SidebarTrigger } from "../ui/sidebar";
-import { UserCircle } from "lucide-react";
+import { Settings, UserCircle } from "lucide-react";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -59,12 +58,12 @@ export function AppHeader() {
           <p>{data.username.split(" ")[0].toUpperCase()}</p>
         </div>
       )}
-      <Settins />
+      <SettingsContent />
     </header>
   );
 }
 
-function Settins() {
+function SettingsContent() {
   const { voices, selectedVoice, setSelectedVoice, volume, rate } =
     useSpeechToText({ lang: "pt-BR" });
 
@@ -102,13 +101,7 @@ function Settins() {
 
             <div className="space-y-2">
               <Label htmlFor="volume">Volume: {volume?.toFixed(1)}</Label>
-              <Slider
-                id="volume"
-                defaultValue={[volume]}
-                max={1}
-                step={0.1}
-                // onValueChange={(value) => {}}
-              />
+              <Slider id="volume" defaultValue={[volume]} max={1} step={0.1} />
             </div>
 
             <div className="space-y-2">
@@ -120,7 +113,6 @@ function Settins() {
                 min={0.5}
                 step={0.1}
                 className="text-secondary"
-                // onValueChange={(value) => {}}
               />
             </div>
           </div>
