@@ -149,7 +149,10 @@ export default function ChatPage({ params }: { params: { chat: number } }) {
         <div ref={messagesEndRef} />
       </main>
 
-      <ChatInput onSendMessage={handleSendMessage} />
+      <ChatInput
+        onSendMessage={handleSendMessage}
+        isLoading={mutationCreate.isLoading}
+      />
     </>
   );
 }

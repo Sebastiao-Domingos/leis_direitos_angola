@@ -10,7 +10,7 @@ export function useActionHistory() {
     mutationFn: controller.deleteChat,
     onSuccess() {
       queryFronecidor.invalidateQueries({
-        queryKey: ["history"],
+        queryKey: ["histories"],
       });
     },
   });
@@ -19,7 +19,7 @@ export function useActionHistory() {
     mutationFn: controller.clearHistory,
     onSuccess() {
       queryFronecidor.invalidateQueries({
-        queryKey: ["history"],
+        queryKey: ["histories"],
       });
     },
   });
@@ -28,7 +28,7 @@ export function useActionHistory() {
     mutationFn: controller.deleteAllChats,
     onSuccess() {
       queryFronecidor.invalidateQueries({
-        queryKey: ["history"],
+        queryKey: ["histories"],
       });
     },
   });

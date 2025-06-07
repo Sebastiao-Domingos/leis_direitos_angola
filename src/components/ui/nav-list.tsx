@@ -38,7 +38,11 @@ export function NavList({
             <Link href={item.url}>
               <SidebarMenuButton
                 tooltip={item.title}
-                isActive={pathName === item.url}
+                isActive={
+                  pathName === item.url ||
+                  (item.url === "/sango-luzingo/conversar" &&
+                    pathName.includes(item.url))
+                }
                 className="flex gap-2 items-center text-[18px] !p-4 !py-6"
                 size="sm"
               >

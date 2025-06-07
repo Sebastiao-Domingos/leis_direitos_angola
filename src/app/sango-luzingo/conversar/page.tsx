@@ -165,7 +165,10 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </main>
 
-      <ChatInput onSendMessage={handleSendMessage} />
+      <ChatInput
+        onSendMessage={handleSendMessage}
+        isLoading={mutationCreate.isLoading}
+      />
     </>
   );
 }

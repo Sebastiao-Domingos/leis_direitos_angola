@@ -10,9 +10,13 @@ import { toast } from "sonner";
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   setMessage?: Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
 }
 
-export default function ChatInput({ onSendMessage }: ChatInputProps) {
+export default function ChatInput({
+  onSendMessage,
+  isLoading,
+}: ChatInputProps) {
   const {
     text,
     setText,
@@ -37,12 +41,14 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
   }, [message]);
 
   useEffect(() => {
-    if (text && !isListening) {
-      // setMessage(text);
-
+    if (!isListening && text) {
+      console.log("cheguei aqui!!!!");
+      console.log(text);
       onSendMessage(text);
+      setText("");
+      setMessage("");
     }
-  }, [text, isListening]);
+  }, [isListening, text]);
 
   const handleSend = () => {
     if (!message.trim()) return;
@@ -72,12 +78,17 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
           }}
           onChange={(e) => {
             setMessage(e.target.value);
-            setText(e.currentTarget.value);
+            // setText(e.currentTarget.value);
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === "Enter") {
               e.preventDefault();
               handleSend();
+
+              // if (!message.trim()) return;
+              // onSendMessage(message); // Chama a função para enviar a mensagem
+              // setMessage("");
+              // setIsFocused(false);
             }
           }}
           rows={1}
@@ -87,26 +98,29 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
         />
 
         <div className={`flex gap-3 ${isFocused && "flex-col"}`}>
-          <Button
-            type="button"
-            size="icon"
-            className={`rounded-full w-10 h-10 ${
-              isListening
-                ? "bg-red-600 hover:bg-red-700 animate-pulse"
-                : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-            }`}
-            onClick={toggleListening}
-            disabled={!supported}
-          >
-            <Mic className="w-5 h-5" size={18} />
-          </Button>
+          {!isListening && (
+            <Button
+              type="button"
+              size="icon"
+              className={`rounded-full w-10 h-10 ${
+                isListening
+                  ? "bg-red-600 hover:bg-red-700 animate-pulse"
+                  : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+              }`}
+              onClick={toggleListening}
+              disabled={!supported || isLoading}
+            >
+              <Mic className="w-5 h-5" size={18} />
+            </Button>
+          )}
 
-          {isSpeaking && !isPaused && (
+          {isListening && !isPaused && (
             <Button
               type="button"
               size="icon"
               className="rounded-full bg-yellow-500 hover:bg-yellow-600"
               onClick={pause}
+              // disabled={isLoading}
             >
               <Pause className="w-5 h-5" />
             </Button>
@@ -131,7 +145,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
               scale: 0.9,
               boxShadow: "0 0 0 4px rgba(0, 123, 255, 0.2)",
             }}
-            disabled={!message.trim()}
+            disabled={!message.trim() || isLoading}
             className="bg-primary w-10 h-10 flex justify-center items-center text-primary-foreground p-2 rounded-full transition shadow-md"
           >
             <SendHorizonal size={18} />
