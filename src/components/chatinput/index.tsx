@@ -20,7 +20,7 @@ export default function ChatInput({
   const {
     text,
     setText,
-    isSpeaking,
+    // isSpeaking,
     isListening,
     isPaused,
     pause,
@@ -42,8 +42,6 @@ export default function ChatInput({
 
   useEffect(() => {
     if (!isListening && text) {
-      console.log("cheguei aqui!!!!");
-      console.log(text);
       onSendMessage(text);
       setText("");
       setMessage("");
