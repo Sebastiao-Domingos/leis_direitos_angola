@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { cleanHtmlText } from "@/helpers/clearHtml";
 import { useActionHistory } from "@/hooks/history/useActionHistory";
 import { useGetHistory } from "@/hooks/history/useGetHistory";
 import { useGetLoggedUser } from "@/hooks/user/useGetUsers";
@@ -36,7 +37,7 @@ export default function Perfil() {
           Painel do Usuário
         </h1>
 
-        <section className="bg-white/20 p-6 rounded-xl shadow-md mb-10 text-white">
+        <section className="bg-white/10 p-6 rounded-xl shadow-md mb-10 text-white">
           <h2 className="text-2xl font-semibold mb-4">Boas-vindas</h2>
           <p>
             Bem-vindo ao seu painel inteligente! Aqui você pode interagir com o
@@ -47,7 +48,7 @@ export default function Perfil() {
         </section>
 
         <section className="grid grid-cols-1 text-white md:grid-cols-2 gap-6">
-          <div className="relative bg-white/20 p-6 rounded-xl shadow-md">
+          <div className="relative bg-white/10 p-6 rounded-xl shadow-md">
             {result_history.isSuccess &&
               histories &&
               histories.conversations && (
@@ -106,11 +107,13 @@ export default function Perfil() {
                     .map((item, index) => (
                       <li key={index}>
                         <p className="flex flex-wrap gap-2 items-center">
-                          {item.text}
+                          {cleanHtmlText(item.text)}
                           <strong className="italic text-sm">
                             {item.sender === "agent"
                               ? "Agente"
-                              : data?.username.split(" ")[0]}
+                              : cleanHtmlText(
+                                  data?.username.split(" ")[0] || ""
+                                )}
                           </strong>
                         </p>
                       </li>
@@ -128,7 +131,7 @@ export default function Perfil() {
             )}
           </div>
 
-          <div className="bg-white/20 p-6 rounded-xl shadow-md">
+          <div className="bg-white/10 p-6 rounded-xl shadow-md">
             <h3 className="text-xl font-bold mb-3">Pergunta Rápida</h3>
             <p className="mb-4">Digite sua dúvida para o agente:</p>
             <form className="flex flex-col space-y-4">
@@ -142,7 +145,7 @@ export default function Perfil() {
           </div>
         </section>
 
-        <section className="bg-white/20 text-white p-6 rounded-xl shadow-md mt-10">
+        <section className="bg-white/10 text-white p-6 rounded-xl shadow-md mt-10">
           <h3 className="text-xl font-bold mb-3">Histórico de Consultas</h3>
           <table className="table-auto w-full border border-collapse border-gray-300/30 rounded">
             <thead>

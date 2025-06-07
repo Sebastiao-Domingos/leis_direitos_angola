@@ -60,14 +60,16 @@ export default function AgentSettingsPage() {
               <Label htmlFor="language">Idioma Preferido</Label>
 
               <Select>
-                <SelectTrigger>
+                <SelectTrigger id="language">
                   <SelectValue
                     placeholder="Selecione o idioma"
                     className="placeholder:text-white"
                   />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pt-pt">Português do Protugal</SelectItem>
+                <SelectContent className="bg-black/50 border-none rounded text-white">
+                  <SelectItem value="pt-pt" defaultChecked>
+                    Português do Protugal
+                  </SelectItem>
                   <SelectItem value="pt-br">Português do Brazil</SelectItem>
                   <SelectItem value="gl">inglês</SelectItem>
                   <SelectItem value="fr">Francês</SelectItem>
@@ -77,10 +79,10 @@ export default function AgentSettingsPage() {
             <div className="space-y-2">
               <Label htmlFor="voice-select">Voz</Label>
               <Select value={selectedVoice} onValueChange={setSelectedVoice}>
-                <SelectTrigger>
+                <SelectTrigger id="voice-select">
                   <SelectValue placeholder="Selecione uma voz" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-black/50 border-none rounded text-white">
                   {voices.map((voice) => (
                     <SelectItem key={voice.name} value={voice.name}>
                       ({voice.lang}) - {voice.name}

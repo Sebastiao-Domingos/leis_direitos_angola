@@ -76,7 +76,7 @@ function SettingsContent() {
             variant="ghost"
             className="text-white hover:bg-red-700"
           >
-            <Settings className="w-5 h-5 md:w-10 md:h-10" />
+            <Settings size={30} className="w-5 h-5 md:w-10 md:h-10" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-80 border-none text-white bg-gradient-to-br from-black/90 /via-primary/90 via-primary/30 to-black/90">
@@ -89,10 +89,10 @@ function SettingsContent() {
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione uma voz" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="!bg-black/60 !border-none !rounded !text-white">
                   {voices.map((voice) => (
                     <SelectItem key={voice.name} value={voice.name}>
-                      {voice.name} ({voice.lang})
+                      ({voice.lang}) - {voice.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

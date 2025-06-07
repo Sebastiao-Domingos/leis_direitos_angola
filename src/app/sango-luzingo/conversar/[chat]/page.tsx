@@ -237,7 +237,7 @@ export function CardMessage({
               className="prose prose-sm max-w-none text-white"
             />
           ) : (
-            msg.text
+            cleanHtmlText(msg.text)
           )}
         </div>
       </motion.div>
