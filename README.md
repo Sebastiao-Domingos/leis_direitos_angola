@@ -21,7 +21,8 @@ Antes de iniciar, certifique-se de ter os seguintes softwares instalados na sua 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/nome-do-projeto.git
+git clone https://github.com/Sebastiao-Domingos/leis_direitos_angola.git
+
 
 # Acesse a pasta do projeto
 cd nome-do-projeto
