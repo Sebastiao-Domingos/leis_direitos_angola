@@ -24,6 +24,7 @@ export default function LayoutSCreen({
 
             <div className="fixed inset-0 z-0 overflow-hidden">
               {/* Fundo em degradê com as cores da bandeira */}
+
               <div className="absolute inset-0 bg-gradient-to-b from-black via-red-600 to-red-700 opacity-80" />
 
               {/* Engrenagem + machete estilizados como ícones SVG */}
@@ -83,13 +84,13 @@ export default function LayoutSCreen({
                 />
 
                 {/* Meia-lua como símbolo de machete simplificado */}
-                <path
+                {/* <path
                   d="M60,130 Q100,80 140,130"
                   stroke="#FFD700"
                   strokeWidth="8"
                   fill="none"
                   strokeLinecap="round"
-                />
+                /> */}
 
                 {/* Estrela central */}
                 <polygon
@@ -98,10 +99,16 @@ export default function LayoutSCreen({
                 />
               </svg>
             </div>
-
-            {children}
+            <div className="min-h-[calc(100%-150px)]">{children}</div>
 
             <Toaster />
+            <footer className="flex justify-center items-center">
+              <div className="flex items-center gap-3">
+                <div className="text-white py-4">
+                  <p>Programmed by @Sebastião, @Cesar, @Afonso, @Graça</p>
+                </div>
+              </div>
+            </footer>
           </main>
         </SidebarProvider>
         <ReactQueryDevtools initialIsOpen={false} />

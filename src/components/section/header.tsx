@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import useSpeechToText from "@/hooks/textToSpeech/useSpeechToText";
 import { Button } from "../ui/button";
+import Image from "next/image";
 export function AppHeader() {
   const { data, result } = useGetLoggedUser();
   const { isSpeaking, isListening } = useSpeechToText({ lang: "pt-BR" });
@@ -58,7 +59,12 @@ export function AppHeader() {
           <p>{data.username.split(" ")[0].toUpperCase()}</p>
         </div>
       )}
-      <SettingsContent />
+      <Image
+        alt="Logo da uniluanda"
+        src={"/images/logo.png"}
+        width={100}
+        height={100}
+      />
     </header>
   );
 }
